@@ -1,4 +1,3 @@
-# Render Blueprint — https://javen-waitlist.onrender.com
 services:
   - type: web
     name: javen-waitlist
