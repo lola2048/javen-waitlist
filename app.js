@@ -24,7 +24,7 @@
       desc: "Your AI Vlog Director. Leave your email and we'll notify you when it's ready.",
       signupTitle: "Leave your email",
       emailPlaceholder: "your@email.com",
-      submit: "I want access",
+      submit: "I want to try it",
       successTitle: "✓ You're on the list",
       successDesc: "We'll email you with updates. Thanks for your interest in Javen.",
       success: "Submitted!",
