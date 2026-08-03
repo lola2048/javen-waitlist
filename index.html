@@ -4,53 +4,80 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Javen · 抢先体验 AI Vlog 导演" />
-  <meta name="theme-color" content="#1a1410" />
+  <meta name="theme-color" content="#140f0c" />
   <title>Javen · 抢先体验</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20260802-film2" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=20260802-film-rich" />
 </head>
 <body>
-  <div class="grain" aria-hidden="true"></div>
-  <div class="film-wash" aria-hidden="true"></div>
+  <div class="stage" aria-hidden="true">
+    <div class="wash"></div>
+    <div class="light-leak leak-a"></div>
+    <div class="light-leak leak-b"></div>
+    <div class="grain"></div>
+    <div class="sprockets sprockets-left"></div>
+    <div class="sprockets sprockets-right"></div>
+  </div>
 
   <main class="page">
     <header class="topbar">
       <div class="logo">
-        <span class="logo-frame" aria-hidden="true"></span>
+        <span class="logo-mark" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
         <div class="logo-text">
           <strong>Javen</strong>
-          <span data-i18n="logoMain">你的 AI Vlog 导演</span>
+          <em data-i18n="logoMain">你的 AI Vlog 导演</em>
         </div>
       </div>
       <button class="lang-toggle" id="langToggle" type="button">EN</button>
     </header>
 
     <section class="hero">
-      <span class="hero-badge" data-i18n="badge">抢先体验</span>
+      <div class="hero-kicker">
+        <span class="hero-badge" data-i18n="badge">抢先体验</span>
+        <span class="hero-rule" aria-hidden="true"></span>
+        <span class="hero-reel">Reel 01</span>
+      </div>
       <h1 data-i18n="title">Javen</h1>
+      <p class="hero-tagline" aria-hidden="true">Directed by AI · Shot by you</p>
       <p class="hero-desc" data-i18n="desc">你的 AI Vlog 导演。留下邮箱，产品上线后第一时间通知你。</p>
     </section>
 
-    <div class="card" id="signupCard">
-      <h2 class="card-title" data-i18n="signupTitle">留下邮箱</h2>
-      <form class="form" id="waitlistForm" novalidate>
-        <input type="email" id="email" name="email" required autocomplete="email" placeholder="your@email.com" data-i18n-placeholder="emailPlaceholder" />
-        <button type="submit" class="btn" id="submitBtn" data-i18n="submit">我要体验</button>
-        <p class="msg" id="formMessage" role="status"></p>
-      </form>
+    <div class="signup" id="signupCard">
+      <div class="signup-frame" aria-hidden="true">
+        <i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i>
+      </div>
+      <div class="signup-inner">
+        <p class="signup-eyebrow">Join the reel</p>
+        <h2 class="card-title" data-i18n="signupTitle">留下邮箱</h2>
+        <form class="form" id="waitlistForm" novalidate>
+          <input type="email" id="email" name="email" required autocomplete="email" placeholder="your@email.com" data-i18n-placeholder="emailPlaceholder" />
+          <button type="submit" class="btn" id="submitBtn" data-i18n="submit">我要体验</button>
+          <p class="msg" id="formMessage" role="status"></p>
+        </form>
+      </div>
     </div>
 
-    <div class="card hidden" id="successCard">
-      <p class="status is-free" data-i18n="successTitle">✓ 已收到申请</p>
-      <p class="success-desc" data-i18n="successDesc">产品开放时我们会通过邮箱通知你，感谢关注 Javen。</p>
+    <div class="signup hidden" id="successCard">
+      <div class="signup-inner success-inner">
+        <p class="status is-free" data-i18n="successTitle">✓ 已收到申请</p>
+        <p class="success-desc" data-i18n="successDesc">产品开放时我们会通过邮箱通知你，感谢关注 Javen。</p>
+      </div>
     </div>
 
-    <p class="reel-mark" aria-hidden="true">— reel 01 —</p>
+    <footer class="footer-meta" aria-hidden="true">
+      <span>24 fps</span>
+      <span class="dot"></span>
+      <span>Warm stock</span>
+      <span class="dot"></span>
+      <span>Early access</span>
+    </footer>
   </main>
 
   <script src="config.js?v=20260802a"></script>
-  <script src="app.js?v=20260802-film2"></script>
+  <script src="app.js?v=20260802-film-rich"></script>
 </body>
 </html>
