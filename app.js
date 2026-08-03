@@ -16,6 +16,7 @@
       duplicate: "该邮箱已登记过",
       error: "提交失败，请重试",
       invalidEmail: "请输入有效邮箱",
+      notConfigured: "报名通道尚未配置，请稍后再试",
     },
     en: {
       logoMain: "Your AI Vlog Director",
@@ -31,14 +32,14 @@
       duplicate: "This email is already registered",
       error: "Failed, please try again",
       invalidEmail: "Enter a valid email",
+      notConfigured: "Signup is not configured yet. Please try again later.",
     },
   };
 
   let lang = "zh";
 
   function t(key) {
-    const text = I18N[lang][key] || I18N.zh[key] || key;
-    return text;
+    return I18N[lang][key] || I18N.zh[key] || key;
   }
 
   function applyLanguage() {
@@ -58,14 +59,34 @@
     document.getElementById("langToggle").textContent = lang === "zh" ? "EN" : "中文";
   }
 
-  function apiUrl(path) {
-    const base = (window.WAITLIST_CONFIG?.apiUrl || "/api/waitlist").replace(/\/api\/waitlist$/, "");
-    return `${base}${path}`;
+  function googleFormConfig() {
+    const cfg = window.WAITLIST_CONFIG?.googleForm || {};
+    return {
+      formAction: (cfg.formAction || "").trim(),
+      emailEntryId: (cfg.emailEntryId || "").trim(),
+    };
   }
 
   function showSuccess() {
     document.getElementById("signupCard").classList.add("hidden");
     document.getElementById("successCard").classList.remove("hidden");
+  }
+
+  async function submitToGoogleForm(email) {
+    const { formAction, emailEntryId } = googleFormConfig();
+    if (!formAction || !emailEntryId) {
+      throw new Error("not_configured");
+    }
+
+    const body = new FormData();
+    body.append(emailEntryId, email);
+
+    // Google Forms does not return CORS headers; no-cors still delivers the submission.
+    await fetch(formAction, {
+      method: "POST",
+      mode: "no-cors",
+      body,
+    });
   }
 
   async function handleJoin(email) {
@@ -80,29 +101,12 @@
     btn.disabled = true;
 
     try {
-      const res = await fetch(apiUrl("/api/waitlist"), {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          locale: lang,
-          source: location.href,
-          user_agent: navigator.userAgent,
-        }),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok && res.status !== 409) throw new Error();
-
-      if (data.already_registered) {
-        msg.textContent = t("duplicate");
-        msg.className = "msg success";
-      } else {
-        msg.textContent = t("success");
-        msg.className = "msg success";
-      }
+      await submitToGoogleForm(email);
+      msg.textContent = t("success");
+      msg.className = "msg success";
       showSuccess();
-    } catch (_) {
-      msg.textContent = t("error");
+    } catch (err) {
+      msg.textContent = err && err.message === "not_configured" ? t("notConfigured") : t("error");
       msg.className = "msg error";
     } finally {
       btn.disabled = false;

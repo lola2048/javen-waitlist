@@ -1,6 +1,6 @@
 # Javen Waitlist
 
-Javen（AI Vlog 导演）抢先体验报名页。
+Javen（AI Vlog 导演）抢先体验报名页。报名邮箱写入 **Google 表单 / 表格**，不依赖服务器数据库。
 
 ## 本地预览
 
@@ -11,30 +11,37 @@ python server.py
 
 打开 http://localhost:8787
 
-本地默认用 SQLite（`data/waitlist.db`）。
+## 连接 Google 表单
 
-## 部署（Render）— 持久化报名数据
+1. 打开 [Google 表单](https://forms.google.com/create)
+2. 标题随意，例如「Javen 抢先体验」
+3. 添加 **1 个简答题**：邮箱（设为必填）
+4. 右上角 **⋮ → 获取预填链接**
+5. 在邮箱里填一个测试地址 → **获取链接**
+6. 把完整预填链接发给开发者，或自行填入 `config.js`：
 
-免费 Web Service **不能**挂磁盘，休眠/重新部署会清空本地 SQLite。  
-请配一个 **Free Postgres**，把连接串设为环境变量 `DATABASE_URL`：
+```js
+window.WAITLIST_CONFIG = {
+  googleForm: {
+    formAction: "https://docs.google.com/forms/d/e/XXXX/formResponse",
+    emailEntryId: "entry.123456789",
+  },
+};
+```
 
-1. Render Dashboard → **New +** → **PostgreSQL** → Free  
-2. 创建后复制 **Internal Database URL**  
-3. 打开 Web Service `javen-waitlist` → **Environment** → 新增  
-   - Key: `DATABASE_URL`  
-   - Value: 刚才的连接串  
-4. **Manual Deploy** 一次  
+预填链接示例：
 
-健康检查 `GET /api/health` 里应看到 `"storage":"postgres","persistent":true`。
+`https://docs.google.com/forms/d/e/XXXX/viewform?usp=pp_url&entry.123456789=test@example.com`
 
-> 注意：Render Free Postgres 创建后约 30 天会过期；正式长期用请升级数据库套餐。
+- `XXXX` → `formAction` 里的 ID（把 `viewform` 改成 `formResponse`）
+- `entry.123456789` → `emailEntryId`
 
-公网地址：https://javen-waitlist.onrender.com
+表单「回答」页可同步到 Google 表格，方便导出。
 
-## 管理接口
+## 部署
 
-| 接口 | 说明 |
-|------|------|
-| `GET /api/health` | 健康检查（含 storage） |
-| `GET /api/waitlist/count` | 报名人数 |
-| `GET /api/waitlist/export` | 导出 CSV |
+推送到 GitHub 后 Render 会自动部署静态页 + 轻量服务：https://javen-waitlist.onrender.com
+
+## 管理
+
+报名数据请在对应 Google 表单 / 表格里查看，不再使用服务器 SQLite/Postgres。
