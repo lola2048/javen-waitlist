@@ -4,57 +4,95 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Javen · 抢先体验 AI Vlog 导演" />
-  <meta name="theme-color" content="#0D0D0D" />
+  <meta name="theme-color" content="#050505" />
   <title>Javen · 抢先体验</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20260731d" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=20260802-night1" />
 </head>
 <body>
-  <div class="glow" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
 
-  <main class="page">
-    <header class="topbar">
-      <div class="logo">
-        <span class="logo-mark" aria-hidden="true">
-          <svg width="30" height="14" viewBox="0 0 30 14" fill="none">
-            <path
-              d="M19.2 3.2c4.6 0 4.6 7.6 0 7.6-4.6 0-6.5-7.6-12.4-7.6-4.2 0-4.2 7.6 0 7.6 5.9 0 7.8-7.6 12.4-7.6z"
-              stroke="currentColor"
-              stroke-width="1.7"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </span>
-        <strong>Javen <span class="logo-sep">|</span> <span data-i18n="logoMain">你的 AI Vlog 导演</span></strong>
+  <div class="monitor">
+    <div class="viewfinder" aria-hidden="true">
+      <span class="corner tl"></span>
+      <span class="corner tr"></span>
+      <span class="corner bl"></span>
+      <span class="corner br"></span>
+    </div>
+
+    <header class="chrome">
+      <div class="chrome-left">
+        <span class="rec" aria-hidden="true"><i></i> REC</span>
+        <span class="chrome-meta">CAM 01</span>
       </div>
       <button class="lang-toggle" id="langToggle" type="button">EN</button>
+      <div class="chrome-right">
+        <span class="chrome-meta" id="timecode">00:00:00:00</span>
+      </div>
     </header>
 
-    <section class="hero">
-      <span class="hero-badge" data-i18n="badge">抢先体验</span>
-      <h1 data-i18n="title">Javen</h1>
-      <p class="hero-desc" data-i18n="desc">你的 AI Vlog 导演。留下邮箱，产品上线后第一时间通知你。</p>
-    </section>
+    <main class="page">
+      <p class="logo-line">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <strong>Javen</strong>
+        <span class="logo-sep">|</span>
+        <span data-i18n="logoMain">你的 AI Vlog 导演</span>
+      </p>
 
-    <div class="card" id="signupCard">
-      <h2 class="card-title" data-i18n="signupTitle">留下邮箱</h2>
-      <form class="form" id="waitlistForm" novalidate>
-        <input type="email" id="email" name="email" required autocomplete="email" placeholder="your@email.com" data-i18n-placeholder="emailPlaceholder" />
-        <button type="submit" class="btn" id="submitBtn" data-i18n="submit">我要体验</button>
-        <p class="msg" id="formMessage" role="status"></p>
-      </form>
-    </div>
+      <section class="hero">
+        <span class="hero-badge" data-i18n="badge">抢先体验</span>
+        <h1 data-i18n="title">Javen</h1>
+        <p class="hero-desc" data-i18n="desc">你的 AI Vlog 导演。留下邮箱，产品上线后第一时间通知你。</p>
+      </section>
 
-    <div class="card hidden" id="successCard">
-      <p class="status is-free" data-i18n="successTitle">✓ 已收到申请</p>
-      <p class="success-desc" data-i18n="successDesc">产品开放时我们会通过邮箱通知你，感谢关注 Javen。</p>
-    </div>
-  </main>
+      <div class="panel" id="signupCard">
+        <div class="panel-head">
+          <span class="panel-tag">IN</span>
+          <h2 class="card-title" data-i18n="signupTitle">留下邮箱</h2>
+        </div>
+        <form class="form" id="waitlistForm" novalidate>
+          <label class="field-label" for="email">EMAIL</label>
+          <input type="email" id="email" name="email" required autocomplete="email" placeholder="your@email.com" data-i18n-placeholder="emailPlaceholder" />
+          <button type="submit" class="btn" id="submitBtn" data-i18n="submit">我要体验</button>
+          <p class="msg" id="formMessage" role="status"></p>
+        </form>
+      </div>
+
+      <div class="panel hidden" id="successCard">
+        <p class="status is-free" data-i18n="successTitle">✓ 已收到申请</p>
+        <p class="success-desc" data-i18n="successDesc">产品开放时我们会通过邮箱通知你，感谢关注 Javen。</p>
+      </div>
+    </main>
+
+    <footer class="chrome chrome-bottom" aria-hidden="true">
+      <span>ISO 800</span>
+      <span>24 fps</span>
+      <span>MONITOR</span>
+    </footer>
+  </div>
 
   <script src="config.js?v=20260802a"></script>
-  <script src="app.js?v=20260802a"></script>
+  <script src="app.js?v=20260802-night1"></script>
+  <script>
+    (function () {
+      const el = document.getElementById("timecode");
+      if (!el) return;
+      const pad = (n, w) => String(n).padStart(w, "0");
+      const tick = () => {
+        const d = new Date();
+        const f = Math.floor((d.getMilliseconds() / 1000) * 24);
+        el.textContent =
+          pad(d.getHours(), 2) + ":" +
+          pad(d.getMinutes(), 2) + ":" +
+          pad(d.getSeconds(), 2) + ":" +
+          pad(f, 2);
+      };
+      tick();
+      setInterval(tick, 42);
+    })();
+  </script>
 </body>
 </html>
