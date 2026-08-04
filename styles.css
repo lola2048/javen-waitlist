@@ -322,8 +322,11 @@ body {
 }
 .cta-desc {
   position: relative;
-  font-size: 0.94rem; color: var(--muted); line-height: 1.75;
-  max-width: 30ch; margin: 0 auto 1.65rem;
+  font-size: 0.94rem; color: var(--muted); line-height: 1.7;
+  max-width: 100%;
+  margin: 0 auto 1.65rem;
+  padding: 0 0.15rem;
+  text-wrap: balance;
 }
 
 .signup-fields { position: relative; }
