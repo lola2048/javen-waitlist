@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Sans+SC:wght@300;400;500;700;900&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20260804-cta2line" />
+  <link rel="stylesheet" href="styles.css?v=20260804-wechat-up" />
 </head>
 <body>
   <div class="paper" aria-hidden="true"></div>
@@ -115,6 +115,16 @@
       <h2 class="cta-title" data-i18n="ctaTitle">首批「体验官」招募中</h2>
       <p class="cta-desc" data-i18n="ctaDesc">如果你的相册里，也有一段还没讲完的故事<br/>留下邮箱，成为首批体验用户。</p>
 
+      <div class="wechat-entry">
+        <p class="wechat-or" data-i18n="wechatOr">加入体验官微信群</p>
+        <button type="button" class="wechat-btn" id="wechatOpen" aria-haspopup="dialog">
+          <svg class="wechat-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="currentColor" d="M9.5 4C5.91 4 3 6.36 3 9.25c0 1.66.9 3.14 2.3 4.14L4.7 15.7l2.45-1.23c.72.22 1.5.35 2.35.35.2 0 .4 0 .59-.02A4.7 4.7 0 0 1 9.5 13.4c-2.98 0-5.4-2.15-5.4-4.8S6.52 3.8 9.5 3.8c2.6 0 4.78 1.64 5.28 3.82A7.2 7.2 0 0 0 9.5 4zm5.9 5.4c-2.76 0-5 1.97-5 4.4 0 2.43 2.24 4.4 5 4.4.62 0 1.22-.1 1.77-.27l1.9.95-.5-1.7c1.1-.8 1.83-1.98 1.83-3.38 0-2.43-2.24-4.4-5-4.4zm-6.7-3.55c.4 0 .72.32.72.72s-.32.72-.72.72-.72-.32-.72-.72.32-.72.72-.72zm3.4 0c.4 0 .72.32.72.72s-.32.72-.72.72-.72-.32-.72-.72.32-.72.72-.72zm3.3 6.95c.34 0 .62.28.62.62s-.28.62-.62.62-.62-.28-.62-.62.28-.62.62-.62zm2.85 0c.34 0 .62.28.62.62s-.28.62-.62.62-.62-.28-.62-.62.28-.62.62-.62z"/>
+          </svg>
+          <span data-i18n="wechatBtn">微信加群</span>
+        </button>
+      </div>
+
       <form class="form" id="waitlistForm" novalidate>
         <div id="signupCard" class="signup-fields">
           <label class="sr-only" for="email" data-i18n="emailLabel">邮箱</label>
@@ -142,16 +152,6 @@
           <p class="note" data-i18n="note">仅用于产品开放通知，不会骚扰你。</p>
         </div>
       </form>
-
-      <div class="wechat-entry">
-        <p class="wechat-or" data-i18n="wechatOr">加入体验官微信群</p>
-        <button type="button" class="wechat-btn" id="wechatOpen" aria-haspopup="dialog">
-          <svg class="wechat-icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path fill="currentColor" d="M9.5 4C5.91 4 3 6.36 3 9.25c0 1.66.9 3.14 2.3 4.14L4.7 15.7l2.45-1.23c.72.22 1.5.35 2.35.35.2 0 .4 0 .59-.02A4.7 4.7 0 0 1 9.5 13.4c-2.98 0-5.4-2.15-5.4-4.8S6.52 3.8 9.5 3.8c2.6 0 4.78 1.64 5.28 3.82A7.2 7.2 0 0 0 9.5 4zm5.9 5.4c-2.76 0-5 1.97-5 4.4 0 2.43 2.24 4.4 5 4.4.62 0 1.22-.1 1.77-.27l1.9.95-.5-1.7c1.1-.8 1.83-1.98 1.83-3.38 0-2.43-2.24-4.4-5-4.4zm-6.7-3.55c.4 0 .72.32.72.72s-.32.72-.72.72-.72-.32-.72-.72.32-.72.72-.72zm3.4 0c.4 0 .72.32.72.72s-.32.72-.72.72-.72-.32-.72-.72.32-.72.72-.72zm3.3 6.95c.34 0 .62.28.62.62s-.28.62-.62.62-.62-.28-.62-.62.28-.62.62-.62zm2.85 0c.34 0 .62.28.62.62s-.28.62-.62.62-.62-.28-.62-.62.28-.62.62-.62z"/>
-          </svg>
-          <span data-i18n="wechatBtn">微信加群</span>
-        </button>
-      </div>
 
       <div class="success-panel hidden" id="successCard">
         <p class="status" data-i18n="successTitle">✓ 已收到申请</p>
