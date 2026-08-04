@@ -3,81 +3,151 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Javen · 抢先体验 AI Vlog 导演" />
-  <meta name="theme-color" content="#140f0c" />
-  <title>Javen · 抢先体验</title>
+  <meta name="description" content="Javen · 首批体验官招募 · AI Vlog 导演" />
+  <meta name="theme-color" content="#f5f7fb" />
+  <title>Javen · 首批体验官招募</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20260802-film-rich" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Sans+SC:wght@300;400;500;700;900&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=20260804-javen-sm" />
 </head>
 <body>
-  <div class="stage" aria-hidden="true">
-    <div class="wash"></div>
-    <div class="light-leak leak-a"></div>
-    <div class="light-leak leak-b"></div>
-    <div class="grain"></div>
-    <div class="sprockets sprockets-left"></div>
-    <div class="sprockets sprockets-right"></div>
-  </div>
+  <div class="paper" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
 
   <main class="page">
     <header class="topbar">
-      <div class="logo">
-        <span class="logo-mark" aria-hidden="true">
-          <span></span><span></span><span></span>
-        </span>
-        <div class="logo-text">
-          <strong>Javen</strong>
-          <em data-i18n="logoMain">你的 AI Vlog 导演</em>
-        </div>
+      <a class="logo" href="#top">
+        <strong>Javen</strong>
+        <em data-i18n="logoMain">你的 AI Vlog 导演</em>
+      </a>
+      <div class="top-actions">
+        <a class="join-link" href="#signup"><span data-i18n="joinLink">申请体验</span><i aria-hidden="true">→</i></a>
+        <button class="lang-toggle" id="langToggle" type="button">EN</button>
       </div>
-      <button class="lang-toggle" id="langToggle" type="button">EN</button>
     </header>
 
-    <section class="hero">
-      <div class="hero-kicker">
-        <span class="hero-badge" data-i18n="badge">抢先体验</span>
-        <span class="hero-rule" aria-hidden="true"></span>
-        <span class="hero-reel">Reel 01</span>
+    <section class="hero" id="top">
+      <div class="hero-visual">
+        <img
+          class="hero-img"
+          src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1600&q=90"
+          alt=""
+          width="1600"
+          height="1200"
+          fetchpriority="high"
+        />
+        <div class="hero-wash"></div>
+        <p class="hero-brand" aria-hidden="true">JAVEN</p>
+        <div class="hero-meta left" aria-hidden="true">记录 · 洞察</div>
+        <div class="hero-meta right" aria-hidden="true">持续 · 回响</div>
       </div>
-      <h1 data-i18n="title">Javen</h1>
-      <p class="hero-tagline" aria-hidden="true">Directed by AI · Shot by you</p>
-      <p class="hero-desc" data-i18n="desc">你的 AI Vlog 导演。留下邮箱，产品上线后第一时间通知你。</p>
+      <div class="hero-copy">
+        <p class="hero-badge" data-i18n="badge">首批体验官招募</p>
+        <h1 class="hero-title" data-i18n="heroTitle">向前走<br/>你眼里的世界<br/><em>值得好好讲</em></h1>
+      </div>
     </section>
 
-    <div class="signup" id="signupCard">
-      <div class="signup-frame" aria-hidden="true">
-        <i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i>
-      </div>
-      <div class="signup-inner">
-        <p class="signup-eyebrow">Join the reel</p>
-        <h2 class="card-title" data-i18n="signupTitle">留下邮箱</h2>
-        <form class="form" id="waitlistForm" novalidate>
-          <input type="email" id="email" name="email" required autocomplete="email" placeholder="your@email.com" data-i18n-placeholder="emailPlaceholder" />
-          <button type="submit" class="btn" id="submitBtn" data-i18n="submit">我要体验</button>
-          <p class="msg" id="formMessage" role="status"></p>
-        </form>
-      </div>
-    </div>
+    <div class="band" aria-hidden="true"></div>
 
-    <div class="signup hidden" id="successCard">
-      <div class="signup-inner success-inner">
-        <p class="status is-free" data-i18n="successTitle">✓ 已收到申请</p>
+    <section class="block prose reveal">
+      <p class="lead" data-i18n="p1">剪辑软件帮你整理画面。</p>
+      <p class="lead strong" data-i18n="p2">Javen 想帮你找回按下录制的理由。</p>
+      <p class="q" data-i18n="p3">你为什么在那一刻<br/>按下录制？</p>
+      <p class="accent-line center" data-i18n="p4">透过镜头留下的，从来不只是画面。</p>
+    </section>
+
+    <div class="band" aria-hidden="true"></div>
+
+    <section class="block ordinary reveal">
+      <div class="ordinary-text">
+        <p data-i18n="o1">我们谓之「普通」</p>
+        <p data-i18n="o2">不是因为它平庸</p>
+        <p data-i18n="o3">而是因为它 <span class="hi">只属于你</span></p>
+      </div>
+      <figure class="ordinary-mark" aria-hidden="true">
+        <img
+          src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=160&q=80"
+          alt=""
+          width="80"
+          height="80"
+          loading="lazy"
+        />
+      </figure>
+      <p class="accent-line" data-i18n="o4">普通的生活，不等于没有故事。</p>
+    </section>
+
+    <div class="band" aria-hidden="true"></div>
+
+    <section class="block moments reveal">
+      <h2 class="moment-title" data-i18n="m1">这一刻，对我很重要</h2>
+      <p class="moment-sub" data-i18n="m2">按下录制的瞬间，故事就开始了。</p>
+      <div class="polaroid-stage">
+        <div class="polaroids" aria-hidden="true">
+          <figure class="polaroid r1"><img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=400&q=80" alt="" loading="lazy" /></figure>
+          <figure class="polaroid r2"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80" alt="" loading="lazy" /></figure>
+          <figure class="polaroid r3"><img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=400&q=80" alt="" loading="lazy" /></figure>
+          <figure class="polaroid r4"><img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=400&q=80" alt="" loading="lazy" /></figure>
+        </div>
+      </div>
+      <p class="punch" data-i18n="m3">你不是没有故事<br/>只是还没有人帮你看见它</p>
+    </section>
+
+    <div class="band" aria-hidden="true"></div>
+
+    <section class="block product reveal">
+      <p class="product-kicker" data-i18n="f0">这就是 Javen 想成为的角色</p>
+      <h2 data-i18n="fTitle">你的 AI Vlog 导演</h2>
+      <div class="feature-rows">
+        <p><span data-i18n="f1">自动提取高光片段</span><i></i><span data-i18n="f2">AI 生成 Hook</span></p>
+        <p><span data-i18n="f3">故事结构智能编排</span><i></i><span data-i18n="f4">视频配文生成</span></p>
+        <p><span data-i18n="f5">声音克隆</span><i></i><span data-i18n="f6">音视频智能分离</span></p>
+      </div>
+      <p class="value" data-i18n="fValue">它不替你制造不存在的精彩<br/>只是把你真正经历过的，好好还给你。</p>
+    </section>
+
+    <div class="band" aria-hidden="true"></div>
+
+    <section class="block cta reveal" id="signup">
+      <div class="cta-glow" aria-hidden="true"></div>
+      <p class="cta-line" data-i18n="ctaKicker">你只需拍下生活</p>
+      <p class="cta-line soft" data-i18n="ctaSub">剩下的，交给 Javen。</p>
+      <h2 class="cta-title" data-i18n="ctaTitle">首批「体验官」招募中</h2>
+      <p class="cta-desc" data-i18n="ctaDesc">如果你的相册里，也有一段还没讲完的故事——留下邮箱，成为首批体验用户。</p>
+
+      <form class="form" id="waitlistForm" novalidate>
+        <div id="signupCard" class="signup-fields">
+          <label class="sr-only" for="email" data-i18n="emailLabel">邮箱</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            autocomplete="email"
+            placeholder="your@email.com"
+            data-i18n-placeholder="emailPlaceholder"
+          />
+          <button type="submit" class="btn" id="submitBtn" data-i18n="submit">申请体验</button>
+          <p class="msg" id="formMessage" role="status"></p>
+          <p class="note" data-i18n="note">仅用于产品开放通知，不会骚扰你。</p>
+        </div>
+      </form>
+
+      <div class="success-panel hidden" id="successCard">
+        <p class="status" data-i18n="successTitle">✓ 已收到申请</p>
         <p class="success-desc" data-i18n="successDesc">产品开放时我们会通过邮箱通知你，感谢关注 Javen。</p>
       </div>
-    </div>
+    </section>
 
-    <footer class="footer-meta" aria-hidden="true">
-      <span>24 fps</span>
-      <span class="dot"></span>
-      <span>Warm stock</span>
-      <span class="dot"></span>
-      <span>Early access</span>
+    <footer class="footer">
+      <strong>Javen</strong>
+      <span data-i18n="footerTag">AI Vlog Director · Early Access</span>
     </footer>
   </main>
 
-  <script src="config.js?v=20260802a"></script>
-  <script src="app.js?v=20260802-film-rich"></script>
+  <a class="dock" href="#signup" id="dockCta" data-i18n="joinLink">申请体验</a>
+
+  <script src="config.js?v=20260804-gf"></script>
+  <script src="app.js?v=20260804-sky-v6"></script>
 </body>
 </html>
