@@ -395,16 +395,16 @@ body {
 /* WeChat entry + modal */
 .wechat-entry {
   position: relative;
-  margin: 0.15rem 0 1.35rem;
-  padding: 0 0 1.15rem;
-  border-top: 0;
-  border-bottom: 1px solid var(--line);
+  margin: 1.05rem 0 0;
+  padding: 1rem 0 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 0;
 }
 
 .wechat-or {
   font-size: 0.82rem;
   color: var(--muted);
-  margin-bottom: 0.65rem;
+  margin-bottom: 0.6rem;
 }
 
 .wechat-btn {
