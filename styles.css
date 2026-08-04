@@ -367,6 +367,121 @@ body {
 .msg.success { color: var(--blue); }
 .note { margin-top: 0.85rem; font-size: 0.68rem; color: var(--muted); text-align: center; }
 
+/* WeChat entry + modal */
+.wechat-entry {
+  position: relative;
+  margin-top: 1.45rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+
+.wechat-or {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+
+.wechat-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-width: 11.5rem;
+  padding: 0.85rem 1.2rem;
+  border: 1px solid rgba(7, 193, 96, 0.35);
+  background: rgba(7, 193, 96, 0.08);
+  color: #07c160;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.wechat-btn:hover { background: rgba(7, 193, 96, 0.14); }
+.wechat-btn:active { transform: scale(0.98); }
+
+.wechat-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: 0 0 auto;
+}
+
+.wechat-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+}
+
+.wechat-modal.hidden { display: none !important; }
+
+.wechat-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(10, 16, 28, 0.55);
+  cursor: pointer;
+}
+
+.wechat-sheet {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 340px);
+  max-height: min(90vh, 640px);
+  overflow: auto;
+  background: #fff;
+  padding: 1.35rem 1.1rem 1.2rem;
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(10, 20, 40, 0.28);
+}
+
+.wechat-close {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.45rem;
+  border: 0;
+  background: transparent;
+  color: #8a93a0;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.25rem 0.45rem;
+}
+
+.wechat-sheet h3 {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  margin: 0.2rem 0 0.35rem;
+  padding: 0 1.5rem;
+}
+
+.wechat-hint {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 0.85rem;
+}
+
+.wechat-qr {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #f5f7fb;
+}
+
+.wechat-expire {
+  margin-top: 0.75rem;
+  font-size: 0.68rem;
+  color: #9aa3af;
+  line-height: 1.5;
+}
+
+body.modal-open { overflow: hidden; }
+
 .success-panel { padding: 0.8rem 0.2rem; position: relative; }
 .status { font-size: 1.12rem; font-weight: 800; color: var(--blue); margin-bottom: 0.45rem; }
 .success-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }

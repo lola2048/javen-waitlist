@@ -37,6 +37,11 @@
       emailPlaceholder: "your@email.com",
       submit: "申请体验",
       note: "仅用于产品开放通知，不会骚扰你。",
+      wechatOr: "或加入体验官微信群",
+      wechatBtn: "微信加群",
+      wechatTitle: "AI Vlog 导演 · 首批体验官",
+      wechatHint: "微信扫码加入群聊",
+      wechatExpire: "二维码约 7 天内有效，过期请联系我们更新",
       successTitle: "✓ 已收到申请",
       successDesc: "产品开放时我们会通过邮箱通知你，感谢关注 Javen。",
       footerTag: "AI Vlog Director · Early Access",
@@ -81,6 +86,11 @@
       emailPlaceholder: "your@email.com",
       submit: "Apply now",
       note: "Only used to notify you when we open. No spam.",
+      wechatOr: "Or join the WeChat group",
+      wechatBtn: "Join WeChat",
+      wechatTitle: "AI Vlog Director · Early Access",
+      wechatHint: "Scan with WeChat to join",
+      wechatExpire: "QR code is valid for about 7 days",
       successTitle: "✓ You're on the list",
       successDesc: "We'll email you when Javen opens. Thanks for your interest.",
       footerTag: "AI Vlog Director · Early Access",
@@ -239,10 +249,33 @@
     window.addEventListener("resize", sync);
   }
 
+  function initWechatModal() {
+    const modal = document.getElementById("wechatModal");
+    const openBtn = document.getElementById("wechatOpen");
+    if (!modal || !openBtn) return;
+
+    const open = () => {
+      modal.classList.remove("hidden");
+      document.body.classList.add("modal-open");
+    };
+    const close = () => {
+      modal.classList.add("hidden");
+      document.body.classList.remove("modal-open");
+    };
+
+    openBtn.addEventListener("click", open);
+    document.getElementById("wechatClose")?.addEventListener("click", close);
+    document.getElementById("wechatCloseBg")?.addEventListener("click", close);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !modal.classList.contains("hidden")) close();
+    });
+  }
+
   function init() {
     applyLanguage();
     initReveal();
     initDock();
+    initWechatModal();
 
     document.getElementById("waitlistForm")?.addEventListener("submit", (e) => {
       e.preventDefault();
