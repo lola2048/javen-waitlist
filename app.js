@@ -46,7 +46,7 @@
       wechatHint: "微信扫码加入群聊",
       wechatExpire: "二维码约 7 天内有效，过期请联系我们更新",
       successTitle: "✓ 已收到申请",
-      successDesc: "产品开放时我们会通过邮箱通知你，感谢关注 Javen。",
+      successDesc: "扫码加入体验官微信群，我们会在群内同步进展。",
       footerTag: "AI Vlog Director · Early Access",
       success: "提交成功！",
       duplicate: "该邮箱已登记过",
@@ -98,7 +98,7 @@
       wechatHint: "Scan with WeChat to join",
       wechatExpire: "QR code is valid for about 7 days",
       successTitle: "✓ You're on the list",
-      successDesc: "We'll email you when Javen opens. Thanks for your interest.",
+      successDesc: "Scan to join the WeChat group — we'll share updates there.",
       footerTag: "AI Vlog Director · Early Access",
       success: "Submitted!",
       duplicate: "This email is already registered",
@@ -173,9 +173,13 @@
     };
   }
 
+  let openWechatModal = () => {};
+  let closeWechatModal = () => {};
+
   function showSuccess() {
     document.getElementById("signupCard").classList.add("hidden");
     document.getElementById("successCard").classList.remove("hidden");
+    openWechatModal();
   }
 
   async function submitToGoogleForm(email, social) {
@@ -267,23 +271,21 @@
 
   function initWechatModal() {
     const modal = document.getElementById("wechatModal");
-    const openBtn = document.getElementById("wechatOpen");
-    if (!modal || !openBtn) return;
+    if (!modal) return;
 
-    const open = () => {
+    openWechatModal = () => {
       modal.classList.remove("hidden");
       document.body.classList.add("modal-open");
     };
-    const close = () => {
+    closeWechatModal = () => {
       modal.classList.add("hidden");
       document.body.classList.remove("modal-open");
     };
 
-    openBtn.addEventListener("click", open);
-    document.getElementById("wechatClose")?.addEventListener("click", close);
-    document.getElementById("wechatCloseBg")?.addEventListener("click", close);
+    document.getElementById("wechatClose")?.addEventListener("click", closeWechatModal);
+    document.getElementById("wechatCloseBg")?.addEventListener("click", closeWechatModal);
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && !modal.classList.contains("hidden")) close();
+      if (e.key === "Escape" && !modal.classList.contains("hidden")) closeWechatModal();
     });
   }
 

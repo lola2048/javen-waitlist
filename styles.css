@@ -324,22 +324,9 @@ body {
   position: relative;
   font-size: 0.94rem; color: var(--muted); line-height: 1.7;
   max-width: 100%;
-  margin: 0.95rem auto 1.35rem;
+  margin: 0 auto 1.65rem;
   padding: 0 0.15rem;
   text-wrap: balance;
-}
-
-.wechat-entry {
-  position: relative;
-  margin: 0.2rem 0 0;
-  padding: 0;
-  border: 0;
-}
-
-.wechat-or {
-  font-size: 0.82rem;
-  color: var(--muted);
-  margin-bottom: 0.6rem;
 }
 
 .signup-fields { position: relative; }
