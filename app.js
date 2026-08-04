@@ -35,9 +35,12 @@
       ctaDesc: "如果你的相册里，也有一段还没讲完的故事——留下邮箱，成为首批体验用户。",
       signupTitle: "申请体验席位",
       emailPlaceholder: "your@email.com",
+      socialLabel: "自媒体主页链接（选填）",
+      socialPlaceholder: "https://小红书 / 抖音 / B站 / Instagram…",
+      socialHint: "我们会优先邀请不同风格的博主参与测试；测试期间免费。",
       submit: "申请体验",
       note: "仅用于产品开放通知，不会骚扰你。",
-      wechatOr: "或加入体验官微信群",
+      wechatOr: "加入体验官微信群",
       wechatBtn: "微信加群",
       wechatTitle: "AI Vlog 导演 · 首批体验官",
       wechatHint: "微信扫码加入群聊",
@@ -84,9 +87,12 @@
       ctaDesc: "If your camera roll still holds an unfinished story—leave your email to join the first batch.",
       signupTitle: "Apply for early access",
       emailPlaceholder: "your@email.com",
+      socialLabel: "Creator homepage (optional)",
+      socialPlaceholder: "https://Xiaohongshu / Douyin / Bilibili / Instagram…",
+      socialHint: "We prioritize creators with different styles for testing. Free during the beta.",
       submit: "Apply now",
       note: "Only used to notify you when we open. No spam.",
-      wechatOr: "Or join the WeChat group",
+      wechatOr: "Join the WeChat group",
       wechatBtn: "Join WeChat",
       wechatTitle: "AI Vlog Director · Early Access",
       wechatHint: "Scan with WeChat to join",
@@ -163,6 +169,7 @@
     return {
       formAction: (cfg.formAction || "").trim(),
       emailEntryId: (cfg.emailEntryId || "").trim(),
+      socialEntryId: (cfg.socialEntryId || "").trim(),
     };
   }
 
@@ -171,14 +178,23 @@
     document.getElementById("successCard").classList.remove("hidden");
   }
 
-  async function submitToGoogleForm(email) {
-    const { formAction, emailEntryId } = googleFormConfig();
+  async function submitToGoogleForm(email, social) {
+    const { formAction, emailEntryId, socialEntryId } = googleFormConfig();
     if (!formAction || !emailEntryId) {
       throw new Error("not_configured");
     }
 
     const body = new FormData();
-    body.append(emailEntryId, email);
+    // Form currently has one short-answer field; keep email clean when possible,
+    // and append social link in the same cell when no dedicated entry exists.
+    if (social && socialEntryId) {
+      body.append(emailEntryId, email);
+      body.append(socialEntryId, social);
+    } else if (social) {
+      body.append(emailEntryId, `${email} | ${social}`);
+    } else {
+      body.append(emailEntryId, email);
+    }
 
     await fetch(formAction, {
       method: "POST",
@@ -187,7 +203,7 @@
     });
   }
 
-  async function handleJoin(email) {
+  async function handleJoin(email, social) {
     const msg = document.getElementById("formMessage");
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       msg.textContent = t("invalidEmail");
@@ -199,7 +215,7 @@
     btn.disabled = true;
 
     try {
-      await submitToGoogleForm(email);
+      await submitToGoogleForm(email, social);
       msg.textContent = t("success");
       msg.className = "msg success";
       showSuccess();
@@ -279,7 +295,10 @@
 
     document.getElementById("waitlistForm")?.addEventListener("submit", (e) => {
       e.preventDefault();
-      handleJoin(document.getElementById("email").value.trim().toLowerCase());
+      handleJoin(
+        document.getElementById("email").value.trim().toLowerCase(),
+        document.getElementById("social")?.value.trim() || ""
+      );
     });
 
     document.getElementById("langToggle")?.addEventListener("click", () => {
