@@ -45,7 +45,7 @@
       wechatBtn: "微信加群",
       wechatTitle: "欢迎加入体验官微信群",
       wechatHint: "扫码进群，和我们一起打磨 Javen",
-      wechatExpire: "二维码约 7 天内有效，过期请联系我们更新",
+      wechatExpire: "该二维码 7 天内（8月11日前）有效",
       successTitle: "✓ 已收到申请",
       successDesc: "扫码加入体验官微信群，我们会在群内同步进展。",
       footerTag: "AI Vlog Director · Early Access",
@@ -98,7 +98,7 @@
       wechatBtn: "Join WeChat",
       wechatTitle: "Welcome to the experience officer group",
       wechatHint: "Scan to join — let’s build Javen together",
-      wechatExpire: "QR code is valid for about 7 days",
+      wechatExpire: "Valid for 7 days (before Aug 11)",
       successTitle: "✓ You're on the list",
       successDesc: "Scan to join the WeChat group — we'll share updates there.",
       footerTag: "AI Vlog Director · Early Access",
@@ -180,8 +180,17 @@
 
   function showSuccess() {
     document.getElementById("signupCard").classList.add("hidden");
-    document.getElementById("successCard").classList.remove("hidden");
+    const success = document.getElementById("successCard");
+    success.classList.remove("hidden");
     openWechatModal();
+    // Jump user to the QR / success area after submit.
+    requestAnimationFrame(() => {
+      (document.getElementById("wechatModal") || success).scrollIntoView?.({
+        behavior: "smooth",
+        block: "center",
+      });
+      success.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
   }
 
   async function submitToGoogleForm(email, social) {

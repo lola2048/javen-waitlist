@@ -496,7 +496,14 @@ body.modal-open { overflow: hidden; }
 
 .success-panel { padding: 0.8rem 0.2rem; position: relative; }
 .status { font-size: 1.12rem; font-weight: 800; color: var(--blue); margin-bottom: 0.45rem; }
-.success-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+.success-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.65; margin-bottom: 0.9rem; }
+.success-qr {
+  width: min(100%, 280px);
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  background: #f5f7fb;
+}
 
 .footer {
   text-align: center;
