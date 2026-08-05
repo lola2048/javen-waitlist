@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Sans+SC:wght@300;400;500;700;900&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20260804-wechat-after" />
+  <link rel="stylesheet" href="styles.css?v=20260804-submit-fix" />
 </head>
 <body>
   <div class="paper" aria-hidden="true"></div>
@@ -129,9 +129,10 @@
           />
           <label class="field-label" for="social" data-i18n="socialLabel">自媒体主页链接（选填）</label>
           <input
-            type="url"
+            type="text"
             id="social"
             name="social"
+            inputmode="url"
             autocomplete="url"
             placeholder="https://"
             data-i18n-placeholder="socialPlaceholder"
@@ -175,6 +176,6 @@
   <a class="dock" href="#signup" id="dockCta" data-i18n="joinLink">申请体验</a>
 
   <script src="config.js?v=20260804-gf"></script>
-  <script src="app.js?v=20260804-welcome"></script>
+  <script src="app.js?v=20260804-submit-fix"></script>
 </body>
 </html>

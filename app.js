@@ -39,6 +39,7 @@
       socialPlaceholder: "https://小红书 / 抖音 / B站 / Instagram…",
       socialHint: "我们会优先邀请不同风格的博主参与测试；测试期间免费。",
       submit: "申请体验",
+      submitting: "提交中…",
       note: "仅用于产品开放通知，不会骚扰你。",
       wechatOr: "加入体验官微信群",
       wechatBtn: "微信加群",
@@ -50,7 +51,7 @@
       footerTag: "AI Vlog Director · Early Access",
       success: "提交成功！",
       duplicate: "该邮箱已登记过",
-      error: "提交失败，请重试",
+      error: "网络不稳定，已为你打开微信群；若未进群可再试一次",
       invalidEmail: "请输入有效邮箱",
       notConfigured: "报名通道尚未配置，请稍后再试",
     },
@@ -91,6 +92,7 @@
       socialPlaceholder: "https://Xiaohongshu / Douyin / Bilibili / Instagram…",
       socialHint: "We prioritize creators with different styles for testing. Free during the beta.",
       submit: "Apply now",
+      submitting: "Submitting…",
       note: "Only used to notify you when we open. No spam.",
       wechatOr: "Join the WeChat group",
       wechatBtn: "Join WeChat",
@@ -102,7 +104,7 @@
       footerTag: "AI Vlog Director · Early Access",
       success: "Submitted!",
       duplicate: "This email is already registered",
-      error: "Failed, please try again",
+      error: "Network issue — WeChat QR is open; try again if needed",
       invalidEmail: "Enter a valid email",
       notConfigured: "Signup is not configured yet. Please try again later.",
     },
@@ -188,23 +190,81 @@
       throw new Error("not_configured");
     }
 
-    const body = new FormData();
-    // Form currently has one short-answer field; keep email clean when possible,
-    // and append social link in the same cell when no dedicated entry exists.
-    if (social && socialEntryId) {
-      body.append(emailEntryId, email);
-      body.append(socialEntryId, social);
-    } else if (social) {
-      body.append(emailEntryId, `${email} | ${social}`);
-    } else {
-      body.append(emailEntryId, email);
-    }
+    const value =
+      social && socialEntryId
+        ? null
+        : social
+          ? `${email} | ${social}`
+          : email;
 
-    await fetch(formAction, {
-      method: "POST",
-      mode: "no-cors",
-      body,
-    });
+    // Primary: fetch with timeout (Google can hang in some networks).
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 7000);
+    try {
+      const body = new FormData();
+      if (social && socialEntryId) {
+        body.append(emailEntryId, email);
+        body.append(socialEntryId, social);
+      } else {
+        body.append(emailEntryId, value);
+      }
+
+      await fetch(formAction, {
+        method: "POST",
+        mode: "no-cors",
+        body,
+        signal: controller.signal,
+      });
+      return;
+    } catch (_) {
+      // Fallback: hidden iframe form POST (works better on some mobile browsers).
+      await new Promise((resolve, reject) => {
+        const iframeName = "gf_hidden_frame";
+        let iframe = document.querySelector(`iframe[name="${iframeName}"]`);
+        if (!iframe) {
+          iframe = document.createElement("iframe");
+          iframe.name = iframeName;
+          iframe.title = "hidden";
+          iframe.style.display = "none";
+          document.body.appendChild(iframe);
+        }
+
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = formAction;
+        form.target = iframeName;
+        form.style.display = "none";
+
+        const add = (name, val) => {
+          const input = document.createElement("input");
+          input.type = "hidden";
+          input.name = name;
+          input.value = val;
+          form.appendChild(input);
+        };
+
+        if (social && socialEntryId) {
+          add(emailEntryId, email);
+          add(socialEntryId, social);
+        } else {
+          add(emailEntryId, value);
+        }
+
+        document.body.appendChild(form);
+        try {
+          form.submit();
+          setTimeout(() => {
+            form.remove();
+            resolve();
+          }, 1200);
+        } catch (err) {
+          form.remove();
+          reject(err);
+        }
+      });
+    } finally {
+      clearTimeout(timer);
+    }
   }
 
   async function handleJoin(email, social) {
@@ -216,7 +276,9 @@
     }
 
     const btn = document.getElementById("submitBtn");
+    const prevLabel = btn.textContent;
     btn.disabled = true;
+    btn.textContent = t("submitting");
 
     try {
       await submitToGoogleForm(email, social);
@@ -224,10 +286,15 @@
       msg.className = "msg success";
       showSuccess();
     } catch (err) {
+      // Still advance UX: WeChat QR is the critical next step for many users.
       msg.textContent = err && err.message === "not_configured" ? t("notConfigured") : t("error");
       msg.className = "msg error";
+      if (!err || err.message !== "not_configured") {
+        showSuccess();
+      }
     } finally {
       btn.disabled = false;
+      btn.textContent = prevLabel || t("submit");
     }
   }
 
