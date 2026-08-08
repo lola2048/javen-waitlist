@@ -36,7 +36,7 @@
       signupTitle: "申请体验席位",
       emailPlaceholder: "your@email.com",
       socialLabel: "自媒体主页链接（选填）",
-      socialPlaceholder: "https://小红书 / 抖音 / B站 / Instagram…",
+      socialPlaceholder: "小红书 / 抖音 / B站 / Instagram…",
       socialHint: "我们会优先邀请不同风格的博主参与测试；测试期间免费。",
       submit: "申请体验",
       submitting: "提交中…",
@@ -53,7 +53,6 @@
       duplicate: "该邮箱已登记过",
       error: "网络不稳定，已为你打开微信群；若未进群可再试一次",
       invalidEmail: "请输入有效邮箱",
-      invalidSocial: "请填写完整链接，例如 https://...",
       notConfigured: "报名通道尚未配置，请稍后再试",
     },
     en: {
@@ -90,7 +89,7 @@
       signupTitle: "Apply for early access",
       emailPlaceholder: "your@email.com",
       socialLabel: "Creator homepage (optional)",
-      socialPlaceholder: "https://Xiaohongshu / Douyin / Bilibili / Instagram…",
+      socialPlaceholder: "Xiaohongshu / Douyin / Bilibili / Instagram…",
       socialHint: "We prioritize creators with different styles for testing. Free during the beta.",
       submit: "Apply now",
       submitting: "Submitting…",
@@ -107,7 +106,6 @@
       duplicate: "This email is already registered",
       error: "Network issue — WeChat QR is open; try again if needed",
       invalidEmail: "Enter a valid email",
-      invalidSocial: "Enter a full link, e.g. https://...",
       notConfigured: "Signup is not configured yet. Please try again later.",
     },
   };
@@ -195,34 +193,18 @@
     });
   }
 
-  function normalizeSocialUrl(raw) {
-    const value = (raw || "").trim();
-    if (!value) return "";
-    if (/^(https?:\/\/|mailto:)/i.test(value)) return value;
-    if (/^[\w.-]+\.[\w.-]+/.test(value)) return `https://${value}`;
-    return value;
-  }
-
-  function isLikelyUrl(value) {
-    try {
-      const parsed = new URL(value);
-      return parsed.protocol === "http:" || parsed.protocol === "https:";
-    } catch (_) {
-      return false;
-    }
-  }
-
   async function submitToGoogleForm(email, social) {
     const { formAction, emailEntryId, socialEntryId } = googleFormConfig();
     if (!formAction || !emailEntryId) {
       throw new Error("not_configured");
     }
 
-    // Never mash the homepage into the email field: Google URL/email format
-    // checks will reject "email | https://...".
+    social = (social || "").trim();
     const payload = [{ name: emailEntryId, value: email }];
     if (social && socialEntryId) {
       payload.push({ name: socialEntryId, value: social });
+    } else if (social) {
+      payload[0].value = `${email} | ${social}`;
     }
 
     // Primary: fetch with timeout (Google can hang in some networks).
@@ -287,13 +269,6 @@
     const msg = document.getElementById("formMessage");
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       msg.textContent = t("invalidEmail");
-      msg.className = "msg error";
-      return;
-    }
-
-    social = normalizeSocialUrl(social);
-    if (social && !isLikelyUrl(social)) {
-      msg.textContent = t("invalidSocial");
       msg.className = "msg error";
       return;
     }
