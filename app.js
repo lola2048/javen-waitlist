@@ -53,6 +53,7 @@
       duplicate: "该邮箱已登记过",
       error: "网络不稳定，已为你打开微信群；若未进群可再试一次",
       invalidEmail: "请输入有效邮箱",
+      invalidSocial: "请填写完整链接，例如 https://...",
       notConfigured: "报名通道尚未配置，请稍后再试",
     },
     en: {
@@ -106,6 +107,7 @@
       duplicate: "This email is already registered",
       error: "Network issue — WeChat QR is open; try again if needed",
       invalidEmail: "Enter a valid email",
+      invalidSocial: "Enter a full link, e.g. https://...",
       notConfigured: "Signup is not configured yet. Please try again later.",
     },
   };
@@ -193,30 +195,42 @@
     });
   }
 
+  function normalizeSocialUrl(raw) {
+    const value = (raw || "").trim();
+    if (!value) return "";
+    if (/^(https?:\/\/|mailto:)/i.test(value)) return value;
+    if (/^[\w.-]+\.[\w.-]+/.test(value)) return `https://${value}`;
+    return value;
+  }
+
+  function isLikelyUrl(value) {
+    try {
+      const parsed = new URL(value);
+      return parsed.protocol === "http:" || parsed.protocol === "https:";
+    } catch (_) {
+      return false;
+    }
+  }
+
   async function submitToGoogleForm(email, social) {
     const { formAction, emailEntryId, socialEntryId } = googleFormConfig();
     if (!formAction || !emailEntryId) {
       throw new Error("not_configured");
     }
 
-    const value =
-      social && socialEntryId
-        ? null
-        : social
-          ? `${email} | ${social}`
-          : email;
+    // Never mash the homepage into the email field: Google URL/email format
+    // checks will reject "email | https://...".
+    const payload = [{ name: emailEntryId, value: email }];
+    if (social && socialEntryId) {
+      payload.push({ name: socialEntryId, value: social });
+    }
 
     // Primary: fetch with timeout (Google can hang in some networks).
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 7000);
     try {
       const body = new FormData();
-      if (social && socialEntryId) {
-        body.append(emailEntryId, email);
-        body.append(socialEntryId, social);
-      } else {
-        body.append(emailEntryId, value);
-      }
+      payload.forEach(({ name, value }) => body.append(name, value));
 
       await fetch(formAction, {
         method: "POST",
@@ -244,20 +258,13 @@
         form.target = iframeName;
         form.style.display = "none";
 
-        const add = (name, val) => {
+        payload.forEach(({ name, value }) => {
           const input = document.createElement("input");
           input.type = "hidden";
           input.name = name;
-          input.value = val;
+          input.value = value;
           form.appendChild(input);
-        };
-
-        if (social && socialEntryId) {
-          add(emailEntryId, email);
-          add(socialEntryId, social);
-        } else {
-          add(emailEntryId, value);
-        }
+        });
 
         document.body.appendChild(form);
         try {
@@ -280,6 +287,13 @@
     const msg = document.getElementById("formMessage");
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       msg.textContent = t("invalidEmail");
+      msg.className = "msg error";
+      return;
+    }
+
+    social = normalizeSocialUrl(social);
+    if (social && !isLikelyUrl(social)) {
+      msg.textContent = t("invalidSocial");
       msg.className = "msg error";
       return;
     }
